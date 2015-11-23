@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sugawara
- * 日付: 2014/06/25
- * 時刻: 14:33
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
