@@ -23,6 +23,10 @@ namespace SceneUtils
 		public event EndSceneHandler endScene;
 		
 		private static SceneManager instance = null;
+		public static SceneManager Instance
+		{
+			get { return instance; }
+		}
 		
 		// Inspectorで設定するのでPublic
 		public int initialSceneId = 0;
@@ -200,11 +204,6 @@ namespace SceneUtils
 			scenes[currentSceneId % scenes.Count].InitializeEvent();
 
             yield break;
-		}
-		
-		public static SceneManager GetInstance()
-		{
-			return SceneManager.instance;
 		}
 	}
 }
