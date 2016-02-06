@@ -25,7 +25,10 @@ namespace SceneUtils
 		// Inspectorで設定するのでPublic
 		public int initialSceneId = 0;
 		public int finalSceneId= 0; // 強制終了用
+
+		// idでの遷移と名前での遷移
 		private List<SceneMonoBehaviour> scenes = new List<SceneMonoBehaviour>();
+		private Dictionary<string, SceneMonoBehaviour> sceneDict = new Dictionary<string, SceneMonoBehaviour>(); 
 		
 		private Timer timer = new Timer();
 		private int currentSceneId = 0;
@@ -37,8 +40,13 @@ namespace SceneUtils
 		{
 			currentSceneId = initialSceneId;
 
-			// 並び順で取得は出来たが保証は不明
+			// 並び順で取得出来たが保証されているかどうかは不明
 			scenes = new List<SceneMonoBehaviour>(GetComponents<SceneMonoBehaviour>());
+			foreach(var scene in scenes)
+			{
+				sceneDict.Add(scene.GetType().ToString(), scene);
+			}
+
 			foreach(var scene in scenes)
 			{
 				scene.enabled = false;
@@ -199,6 +207,30 @@ namespace SceneUtils
 			scenes[currentSceneId % scenes.Count].InitializeEvent();
 
             yield break;
+		}
+
+		public void GotoSceneByName(string key)
+		{
+			// 終了時にTimerが作動していた場合は終了する
+			timer.Elapsed -= LaunchTimerEvent;
+			timer.Stop();
+
+			if (changeScene != null) { changeScene(EventArgs.Empty); }
+
+			StartCoroutine(GotoSceneByNameProcess(key, EventArgs.Empty));
+		}
+		private IEnumerator GotoSceneByNameProcess(string key, EventArgs e)
+		{
+			scenes[currentSceneId % scenes.Count].FinalizeEvent();
+			scenes[currentSceneId % scenes.Count].enabled = false;
+
+			// 移動先のIDを取得
+			currentSceneId = scenes.IndexOf(sceneDict[key]);
+
+			sceneDict[key].enabled = true;
+			sceneDict[key].InitializeEvent();
+
+			yield break;
 		}
 	}
 }

@@ -18,6 +18,6 @@ public class TestSceneMono_01 : SceneMonoBehaviour
 	
 	protected override void OnTimerComplete(EventArgs e)
 	{
-		manager.GotoNextScene();
+		manager.GotoSceneByName("TestSceneMono_02");
 	}
 }
