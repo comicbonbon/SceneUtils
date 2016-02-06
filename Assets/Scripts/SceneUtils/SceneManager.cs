@@ -22,16 +22,10 @@ namespace SceneUtils
 		public event ChangeSceneHandler changeScene;
 		public event EndSceneHandler endScene;
 		
-		private static SceneManager instance = null;
-		public static SceneManager Instance
-		{
-			get { return instance; }
-		}
-		
 		// Inspectorで設定するのでPublic
 		public int initialSceneId = 0;
 		public int finalSceneId= 0; // 強制終了用
-		public List<SceneMonoBehaviour> scenes = new List<SceneMonoBehaviour>();
+		private List<SceneMonoBehaviour> scenes = new List<SceneMonoBehaviour>();
 		
 		private Timer timer = new Timer();
 		private int currentSceneId = 0;
@@ -42,13 +36,14 @@ namespace SceneUtils
         void Start()
 		{
 			currentSceneId = initialSceneId;
-			
+
+			// 並び順で取得は出来たが保証は不明
+			scenes = new List<SceneMonoBehaviour>(GetComponents<SceneMonoBehaviour>());
 			foreach(var scene in scenes)
 			{
 				scene.enabled = false;
 			}
 			
-			if(!SceneManager.instance)	{SceneManager.instance = this;}
 			scenes[currentSceneId].enabled = true;
             scenes[currentSceneId].InitializeEvent();
         }

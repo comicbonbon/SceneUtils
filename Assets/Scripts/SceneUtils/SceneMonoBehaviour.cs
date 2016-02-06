@@ -7,19 +7,34 @@ namespace SceneUtils
 	/// <summary>
 	/// Description of SceneMonoBehaviour.
 	/// </summary>
-	
+
+	[RequireComponent(typeof(SceneManager))]
 	public class SceneMonoBehaviour : MonoBehaviour
 	{
+		private SceneManager _manager = null;
+		protected SceneManager manager
+		{
+			get
+			{
+				if(_manager == null)
+				{
+					_manager = GetComponent<SceneManager>();
+				}
+
+				return _manager;
+			}
+		}
+
 		// StartまたはUpdateが無いとInspectorにenabledのチェックボックスが表示されなくなる
 		// あったほうがDebugしやすいので追加
 		void Start()	{}
 		
 		public void InitializeEvent()
 		{
-			SceneManager.Instance.stageClicked += OnStageClicked;
-			SceneManager.Instance.timerComplete += OnTimerComplete;
-			SceneManager.Instance.changeScene += OnChangeScene;
-			SceneManager.Instance.endScene += OnEndScene;
+			manager.stageClicked += OnStageClicked;
+			manager.timerComplete += OnTimerComplete;
+			manager.changeScene += OnChangeScene;
+			manager.endScene += OnEndScene;
 
             InitializeScene();
 		}
@@ -30,10 +45,10 @@ namespace SceneUtils
 		
 		public void FinalizeEvent()
 		{
-			SceneManager.Instance.stageClicked -= OnStageClicked;
-			SceneManager.Instance.timerComplete -= OnTimerComplete;
-			SceneManager.Instance.changeScene -= OnChangeScene;
-			SceneManager.Instance.endScene -= OnEndScene;
+			manager.stageClicked -= OnStageClicked;
+			manager.timerComplete -= OnTimerComplete;
+			manager.changeScene -= OnChangeScene;
+			manager.endScene -= OnEndScene;
 
             FinalizeScene();
 		}

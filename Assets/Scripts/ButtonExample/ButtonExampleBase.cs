@@ -26,7 +26,7 @@ namespace ButtonSample
 			Debug.Log("Base Init");
 
 			// タイムアウトの設定
-			SceneManager.Instance.StartTimer(5000.0f);
+			manager.StartTimer(5000.0f);
 
 			InitialProcess();
 		}
@@ -39,7 +39,7 @@ namespace ButtonSample
 		protected override void OnTimerComplete(EventArgs e)
 		{
 			// Initial画面へ
-			SceneManager.Instance.GotoSceneById(0);
+			manager.GotoSceneById(0);
 		}
 
 		protected override void FinalizeScene()
@@ -53,7 +53,7 @@ namespace ButtonSample
 
 		protected virtual void OnClickToNext()
 		{
-			SceneManager.Instance.GotoNextScene();
+			manager.GotoNextScene();
 		}
 	}
 }
