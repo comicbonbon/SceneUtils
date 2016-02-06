@@ -16,10 +16,10 @@ namespace SceneUtils
 		
 		public void InitializeEvent()
 		{
-			SceneManager.GetInstance().stageClicked += OnStageClicked;
-			SceneManager.GetInstance().timerComplete += OnTimerComplete;
-			SceneManager.GetInstance().changeScene += OnChangeScene;
-			SceneManager.GetInstance().endScene += OnEndScene;
+			SceneManager.Instance.stageClicked += OnStageClicked;
+			SceneManager.Instance.timerComplete += OnTimerComplete;
+			SceneManager.Instance.changeScene += OnChangeScene;
+			SceneManager.Instance.endScene += OnEndScene;
 
             InitializeScene();
 		}
@@ -30,10 +30,10 @@ namespace SceneUtils
 		
 		public void FinalizeEvent()
 		{
-			SceneManager.GetInstance().stageClicked -= OnStageClicked;
-			SceneManager.GetInstance().timerComplete -= OnTimerComplete;
-			SceneManager.GetInstance().changeScene -= OnChangeScene;
-			SceneManager.GetInstance().endScene -= OnEndScene;
+			SceneManager.Instance.stageClicked -= OnStageClicked;
+			SceneManager.Instance.timerComplete -= OnTimerComplete;
+			SceneManager.Instance.changeScene -= OnChangeScene;
+			SceneManager.Instance.endScene -= OnEndScene;
 
             FinalizeScene();
 		}

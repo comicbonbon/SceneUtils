@@ -8,7 +8,7 @@ public class TestSceneMonoInit : SceneMonoBehaviour
 	{
 		Debug.Log("TestSceneInit Init");
 		
-		SceneManager.GetInstance().StartTimer(1000);
+		SceneManager.Instance.StartTimer(1000);
 	}
 	
 	protected override void FinalizeScene()
@@ -18,6 +18,6 @@ public class TestSceneMonoInit : SceneMonoBehaviour
 	
 	protected override void OnTimerComplete(EventArgs e)
 	{
-		SceneManager.GetInstance().GotoNextScene();
+		SceneManager.Instance.GotoNextScene();
 	}
 }
