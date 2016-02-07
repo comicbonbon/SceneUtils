@@ -21,7 +21,10 @@ namespace SceneUtils
 		public event TimerCompleteHandler timerComplete;
 		public event ChangeSceneHandler changeScene;
 		public event EndSceneHandler endScene;
-		
+
+		[SerializeField]
+		private bool transitionByIdOnly = false;
+
 		// Inspectorで設定するのでPublic
 		public int initialSceneId = 0;
 		public int finalSceneId= 0; // 強制終了用
@@ -42,12 +45,22 @@ namespace SceneUtils
 
 			// 並び順で取得出来たが保証されているかどうかは不明
 			scenes = new List<SceneMonoBehaviour>(GetComponents<SceneMonoBehaviour>());
-			foreach(var scene in scenes)
+			if(!transitionByIdOnly)
 			{
-				sceneDict.Add(scene.GetType().ToString(), scene);
+				try
+				{
+					foreach (var scene in scenes)
+					{
+						sceneDict.Add(scene.GetType().ToString(), scene);
+					}
+				}
+				catch (ArgumentException)
+				{
+					throw new ArgumentException("This scene is not supprted to GotoSceneByName. Please enable TransitionByIdOnly.");
+				}
 			}
 
-			foreach(var scene in scenes)
+			foreach (var scene in scenes)
 			{
 				scene.enabled = false;
 			}
@@ -211,6 +224,11 @@ namespace SceneUtils
 
 		public void GotoSceneByName(string key)
 		{
+			if(transitionByIdOnly)
+			{
+				throw new ArgumentException("Can not be used. Please disable TransitionByIdOnly.");
+			}
+
 			// 終了時にTimerが作動していた場合は終了する
 			timer.Elapsed -= LaunchTimerEvent;
 			timer.Stop();
