@@ -15,7 +15,7 @@ namespace ButtonSample
 
 		protected List<Button> btns = new List<Button>();
 
-		void Awake()
+		protected override void OnAwake()
 		{
 			// GameObjectが非アクティブ状態だとComponentの取得ができないのでAwakeでButtonをあらかじめ取得しておく
 			btns = new List<Button>(canvas.GetComponentsInChildren<Button>());
@@ -26,7 +26,7 @@ namespace ButtonSample
 			Debug.Log("Base Init");
 
 			// タイムアウトの設定
-			manager.StartTimer(5000.0f);
+			Manager.StartTimer(5000.0f);
 
 			InitialProcess();
 		}
@@ -39,7 +39,7 @@ namespace ButtonSample
 		protected override void OnTimerComplete(EventArgs e)
 		{
 			// Initial画面へ
-			manager.GotoSceneById(0);
+			Manager.GotoSceneById(0);
 		}
 
 		protected override void FinalizeScene()
@@ -53,7 +53,7 @@ namespace ButtonSample
 
 		protected virtual void OnClickToNext()
 		{
-			manager.GotoNextScene();
+			Manager.GotoNextScene();
 		}
 	}
 }

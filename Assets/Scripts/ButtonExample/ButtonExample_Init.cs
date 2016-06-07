@@ -25,17 +25,17 @@ namespace ButtonSample
 		private void OnClick_01()
 		{
 			Debug.Log("1");
-			manager.GotoSceneById(1);
+			Manager.GotoSceneById(1);
 		}
 		private void OnClick_02()
 		{
 			Debug.Log("2");
-			manager.GotoSceneById(2);
+			Manager.GotoSceneById(2);
 		}
 		private void OnClick_03()
 		{
 			Debug.Log("3");
-			manager.GotoSceneById(3);
+			Manager.GotoSceneById(3);
 		}
 	}
 }

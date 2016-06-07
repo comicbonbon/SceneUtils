@@ -11,18 +11,43 @@ namespace SceneUtils
 	[RequireComponent(typeof(SceneManager))]
 	public class SceneMonoBehaviour : MonoBehaviour
 	{
-		private SceneManager _manager = null;
-		protected SceneManager manager
+		private SceneManager manager = null;
+		protected SceneManager Manager
 		{
 			get
 			{
-				if(_manager == null)
+				if(manager == null)
 				{
-					_manager = GetComponent<SceneManager>();
+					manager = GetComponent<SceneManager>();
 				}
 
-				return _manager;
+				return manager;
 			}
+		}
+
+		// Script名をUniqueな名前として使用するかどうか
+		[SerializeField]
+		private bool usingScriptName = false;
+		// Uniqueな名前を持たせる
+		[SerializeField]
+		private string uniqueName = "";
+		public string UniqueName
+		{
+			get
+			{
+				return uniqueName;
+			}
+		}
+
+		void Awake()
+		{
+			if (uniqueName == "")
+				uniqueName = System.Guid.NewGuid().ToString();
+
+			if (usingScriptName)
+				uniqueName = this.GetType().ToString();
+
+			OnAwake();
 		}
 
 		// StartまたはUpdateが無いとInspectorにenabledのチェックボックスが表示されなくなる
@@ -31,10 +56,10 @@ namespace SceneUtils
 		
 		public void InitializeEvent()
 		{
-			manager.stageClicked += OnStageClicked;
-			manager.timerComplete += OnTimerComplete;
-			manager.changeScene += OnChangeScene;
-			manager.endScene += OnEndScene;
+			Manager.stageClicked += OnStageClicked;
+			Manager.timerComplete += OnTimerComplete;
+			Manager.changeScene += OnChangeScene;
+			Manager.endScene += OnEndScene;
 
             InitializeScene();
 		}
@@ -45,10 +70,10 @@ namespace SceneUtils
 		
 		public void FinalizeEvent()
 		{
-			manager.stageClicked -= OnStageClicked;
-			manager.timerComplete -= OnTimerComplete;
-			manager.changeScene -= OnChangeScene;
-			manager.endScene -= OnEndScene;
+			Manager.stageClicked -= OnStageClicked;
+			Manager.timerComplete -= OnTimerComplete;
+			Manager.changeScene -= OnChangeScene;
+			Manager.endScene -= OnEndScene;
 
             FinalizeScene();
 		}
@@ -61,5 +86,7 @@ namespace SceneUtils
 		protected virtual void OnTimerComplete(EventArgs e)	{}
 		protected virtual void OnChangeScene(EventArgs e)	{}
 		protected virtual void OnEndScene(EventArgs e)		{}
+
+		protected virtual void OnAwake() {}
 	}
 }

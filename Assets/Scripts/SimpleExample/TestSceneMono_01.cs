@@ -8,7 +8,7 @@ public class TestSceneMono_01 : SceneMonoBehaviour
 	{
 		Debug.Log("TestScene_01 Init");
 		
-		manager.StartTimer(2000);
+		Manager.StartTimer(2000);
 	}
 	
 	protected override void FinalizeScene()
@@ -18,6 +18,6 @@ public class TestSceneMono_01 : SceneMonoBehaviour
 	
 	protected override void OnTimerComplete(EventArgs e)
 	{
-		manager.GotoSceneByName("TestSceneMono_02");
+		Manager.GotoSceneByName("TestSceneMono_02");
 	}
 }
